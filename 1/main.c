@@ -7,6 +7,12 @@
 #define MAX_LINE_LEN 101
 #define MAX_LINES 1001
 
+#define PART1 false
+#define PART2 true
+
+// Choose which part gets solved
+bool part = PART2;
+
 int main(){
 
   FILE* file = fopen("input", "r");
@@ -15,6 +21,7 @@ int main(){
     fprintf(stderr,"Failed to open the file\n");
     return -1;
   }
+
 
   int first_num[MAX_LINES];
   int last_num[MAX_LINES]; 
@@ -37,25 +44,27 @@ int main(){
           break;
         } 
      // look for digit hidden as text 
-      for(int curr_num = 0; (curr_num < 9) && !first_found; curr_num++){
-        for(unsigned long curr_num_char = 0; curr_num_char < strlen(num[curr_num]); curr_num_char++){
-          if(line[curr_line][curr_line_char+curr_num_char] == num[curr_num][curr_num_char]){
-            if(curr_num_char+1 == strlen(num[curr_num])){
-              first_num[curr_line] = curr_num+1;
-              first_found = true;
+      if(part){
+        for(int curr_num = 0; (curr_num < 9) && !first_found; curr_num++){
+          for(unsigned long curr_num_char = 0; curr_num_char < strlen(num[curr_num]); curr_num_char++){
+            if(line[curr_line][curr_line_char+curr_num_char] == num[curr_num][curr_num_char]){
+              if(curr_num_char+1 == strlen(num[curr_num])){
+                first_num[curr_line] = curr_num+1;
+                first_found = true;
+                break;
+                // do sth
+              }
+            }
+            // jump out !if, check next number first char
+            else{
               break;
-              // do sth
             }
           }
-          // jump out !if, check next number first char
-          else{
-            break;
-          }
+        
+        } 
+        if(first_found){
+          break;
         }
-      
-      } 
-      if(first_found){
-        break;
       }
      }
       first_found = false;
@@ -68,24 +77,24 @@ int main(){
           last_num[curr_line] = (line[curr_line][curr_line_char] - '0'); 
         }
         // Look for digit hidden as text
-     
-        for(int curr_num = 0; (curr_num < 9); curr_num++){
-          for(unsigned long curr_num_char = 0; curr_num_char < strlen(num[curr_num]); curr_num_char++){
-            if(line[curr_line][curr_line_char+curr_num_char] == num[curr_num][curr_num_char]){
-              if(curr_num_char+1 == strlen(num[curr_num])){
-                last_num[curr_line] = curr_num+1;
+        if(part){ 
+          for(int curr_num = 0; (curr_num < 9); curr_num++){
+            for(unsigned long curr_num_char = 0; curr_num_char < strlen(num[curr_num]); curr_num_char++){
+              if(line[curr_line][curr_line_char+curr_num_char] == num[curr_num][curr_num_char]){
+                if(curr_num_char+1 == strlen(num[curr_num])){
+                  last_num[curr_line] = curr_num+1;
+                  break;
+                  // do sth
+                }
+              }
+              // jump out !if, check next number first char
+              else{
                 break;
-                // do sth
               }
             }
-            // jump out !if, check next number first char
-            else{
-              break;
-            }
-          }
-        
+          
+          } 
         } 
-    
       //end of for
     } 
    }
