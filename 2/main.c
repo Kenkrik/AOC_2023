@@ -26,6 +26,12 @@ int main(){
   }
 
   file = fopen("input", "r");
+  
+  if(file == NULL){
+    fprintf(stderr, "Failed to open input");
+    return -1;
+  }
+
   int line_count = 0;
 
   while(fgets(line[line_count],MAX_LINE_LENGTH,file)){
