@@ -1,0 +1,6 @@
+out.dSYM/
+results/
+inputs/
+out
+.DS_Store
+main2.c
